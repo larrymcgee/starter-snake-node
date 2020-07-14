@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser')
 const express = require('express')
+const serverless = require('serverless-http');
 
 const PORT = process.env.PORT || 3000
 
@@ -13,6 +14,7 @@ app.post('/end', handleEnd)
 
 app.listen(PORT, () => console.log(`Battlesnake Server listening at http://127.0.0.1:${PORT}`))
 
+module.exports.handler = serverless(app);
 
 function handleIndex(request, response) {
   var battlesnakeInfo = {
