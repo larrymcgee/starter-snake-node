@@ -1,6 +1,5 @@
 const bodyParser = require('body-parser')
 const express = require('express')
-const serverless = require('serverless-http');
 
 const PORT = process.env.PORT || 3000
 
@@ -14,16 +13,13 @@ app.post('/end', handleEnd)
 
 app.listen(PORT, () => console.log(`Battlesnake Server listening at http://127.0.0.1:${PORT}`))
 
-module.exports = app;
-module.exports.handler = serverless(app);
-
 function handleIndex(request, response) {
   var battlesnakeInfo = {
     apiversion: '1',
     author: '',
-    color: '#888888',
-    head: 'default',
-    tail: 'default'
+    color: '#3E338F',
+    head: 'silly',
+    tail: 'skinny'
   }
   response.status(200).json(battlesnakeInfo)
 }
@@ -39,9 +35,12 @@ function handleMove(request, response) {
   var gameData = request.body
 
   var possibleMoves = ['up', 'down', 'left', 'right']
-  var move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
+  //var move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
+  var move = 'right'
 
+  console.log(gameData.you.head);
   console.log('MOVE: ' + move)
+
   response.status(200).send({
     move: move
   })
@@ -53,3 +52,4 @@ function handleEnd(request, response) {
   console.log('END')
   response.status(200).send('ok')
 }
+
